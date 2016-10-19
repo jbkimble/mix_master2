@@ -1,0 +1,287 @@
+  [1m[36mActiveRecord::SchemaMigration Load (6.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (121.1ms)[0m  [1mDROP DATABASE IF EXISTS "mix_master_test"[0m
+  [1m[35m (330.9ms)[0m  CREATE DATABASE "mix_master_test" ENCODING = 'unicode'
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (3.9ms)[0m  CREATE TABLE "artists" ("id" serial primary key, "name" character varying, "image_path" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (1.4ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36m (0.3ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20151218193014')
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:16:56 -0600
+Processing by ArtistsController#index as HTML
+  [1m[35mArtist Load (0.5ms)[0m  SELECT "artists".* FROM "artists"
+  Rendered artists/index.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 284ms (Views: 281.8ms | ActiveRecord: 1.7ms)
+Started GET "/artists/new" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#new as HTML
+  Rendered artists/new.html.erb within layouts/application (15.2ms)
+Completed 200 OK in 40ms (Views: 18.2ms | ActiveRecord: 15.7ms)
+Started POST "/artists" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#create as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"Bob Marley", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Create Artist"}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.5ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.062554"], ["updated_at", "2016-10-19 17:16:57.062554"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/artists/1
+Completed 302 Found in 14ms (ActiveRecord: 1.1ms)
+Started GET "/artists/1" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  Rendered artists/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 8ms (Views: 2.9ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#index as HTML
+  [1m[35mArtist Load (0.2ms)[0m  SELECT "artists".* FROM "artists"
+  Rendered artists/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.2ms)
+Started GET "/artists/new" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#new as HTML
+  Rendered artists/new.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 2ms (Views: 2.1ms | ActiveRecord: 0.0ms)
+Started POST "/artists" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#create as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Create Artist"}
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = '' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  Rendered artists/new.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 5ms (Views: 2.9ms | ActiveRecord: 0.4ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.097994"], ["updated_at", "2016-10-19 17:16:57.097994"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/artists/2" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArtist Load (0.2ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 2]]
+  Rendered artists/show.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.2ms)
+Started DELETE "/artists/2" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#destroy as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM "artists" WHERE "artists"."id" = $1[0m  [["id", 2]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/artists
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms)
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#index as HTML
+  [1m[36mArtist Load (0.3ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  Rendered artists/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 2ms (Views: 1.9ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.115639"], ["updated_at", "2016-10-19 17:16:57.115639"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/artists/3" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mArtist Load (0.3ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 3]]
+  Rendered artists/show.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.3ms)
+Started GET "/artists/3/edit" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  Rendered artists/edit.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.2ms)
+Started PATCH "/artists/3" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#update as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"Beyonce", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Update Artist", "id"=>"3"}
+  [1m[35mArtist Load (0.2ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 3]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE ("artists"."name" = 'Beyonce' AND "artists"."id" != 3) LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE "artists" SET "name" = $1, "updated_at" = $2 WHERE "artists"."id" = $3[0m  [["name", "Beyonce"], ["updated_at", "2016-10-19 17:16:57.134135"], ["id", 3]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/artists/3
+Completed 302 Found in 5ms (ActiveRecord: 0.8ms)
+Started GET "/artists/3" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  Rendered artists/show.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob' LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Bob"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.146816"], ["updated_at", "2016-10-19 17:16:57.146816"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Adele' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Adele"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.149628"], ["updated_at", "2016-10-19 17:16:57.149628"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Beyonce' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Beyonce"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:16:57.151930"], ["updated_at", "2016-10-19 17:16:57.151930"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:16:57 -0600
+Processing by ArtistsController#index as HTML
+  [1m[35mArtist Load (0.2ms)[0m  SELECT "artists".* FROM "artists"
+  Rendered artists/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" IS NULL LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mArtist Load (5.5ms)[0m  [1mSELECT  "artists".* FROM "artists"  ORDER BY "artists"."id" ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "artists" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "a"], ["created_at", "2016-10-19 17:16:57.187007"], ["updated_at", "2016-10-19 17:16:57.187007"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'a' LIMIT 1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'A' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:23:41 -0600
+Processing by ArtistsController#index as HTML
+  [1m[36mArtist Load (0.3ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  Rendered artists/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 151ms (Views: 149.7ms | ActiveRecord: 0.8ms)
+Started GET "/artists/new" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#new as HTML
+  Rendered artists/new.html.erb within layouts/application (15.1ms)
+Completed 200 OK in 21ms (Views: 17.1ms | ActiveRecord: 1.5ms)
+Started POST "/artists" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#create as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"Bob Marley", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Create Artist"}
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.153715"], ["updated_at", "2016-10-19 17:23:42.153715"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/artists/8
+Completed 302 Found in 37ms (ActiveRecord: 1.2ms)
+Started GET "/artists/8" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[35mArtist Load (0.2ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 8]]
+  Rendered artists/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 9ms (Views: 2.7ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#index as HTML
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  Rendered artists/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.2ms)
+Started GET "/artists/new" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#new as HTML
+  Rendered artists/new.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 2ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+Started POST "/artists" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#create as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Create Artist"}
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = '' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  Rendered artists/new.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 5ms (Views: 2.6ms | ActiveRecord: 0.5ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.189796"], ["updated_at", "2016-10-19 17:23:42.189796"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/artists/9" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 9]]
+  Rendered artists/show.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.2ms)
+Started DELETE "/artists/9" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#destroy as HTML
+  Parameters: {"id"=>"9"}
+  [1m[35mArtist Load (0.3ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 9]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "artists" WHERE "artists"."id" = $1  [["id", 9]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/artists
+Completed 302 Found in 2ms (ActiveRecord: 0.6ms)
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#index as HTML
+  [1m[35mArtist Load (0.2ms)[0m  SELECT "artists".* FROM "artists"
+  Rendered artists/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob Marley' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Bob Marley"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.207468"], ["updated_at", "2016-10-19 17:23:42.207468"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/artists/10" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 10]]
+  Rendered artists/show.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.2ms)
+Started GET "/artists/10/edit" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#edit as HTML
+  Parameters: {"id"=>"10"}
+  [1m[35mArtist Load (0.2ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 10]]
+  Rendered artists/edit.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 5ms (Views: 3.9ms | ActiveRecord: 0.2ms)
+Started PATCH "/artists/10" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#update as HTML
+  Parameters: {"utf8"=>"✓", "artist"=>{"name"=>"Beyonce", "image_path"=>"http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"}, "commit"=>"Update Artist", "id"=>"10"}
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1[0m  [["id", 10]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mArtist Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE ("artists"."name" = 'Beyonce' AND "artists"."id" != 10) LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE "artists" SET "name" = $1, "updated_at" = $2 WHERE "artists"."id" = $3  [["name", "Beyonce"], ["updated_at", "2016-10-19 17:23:42.227285"], ["id", 10]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/artists/10
+Completed 302 Found in 5ms (ActiveRecord: 1.0ms)
+Started GET "/artists/10" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[35mArtist Load (0.1ms)[0m  SELECT  "artists".* FROM "artists" WHERE "artists"."id" = $1 LIMIT 1  [["id", 10]]
+  Rendered artists/show.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.1ms)
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.3ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Bob' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Bob"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.237514"], ["updated_at", "2016-10-19 17:23:42.237514"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.3ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Adele' LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Adele"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.239715"], ["updated_at", "2016-10-19 17:23:42.239715"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'Beyonce' LIMIT 1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "artists" ("name", "image_path", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Beyonce"], ["image_path", "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"], ["created_at", "2016-10-19 17:23:42.242161"], ["updated_at", "2016-10-19 17:23:42.242161"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Started GET "/artists" for 127.0.0.1 at 2016-10-19 11:23:42 -0600
+Processing by ArtistsController#index as HTML
+  [1m[36mArtist Load (0.2ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  Rendered artists/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mArtist Exists (0.3ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mArtist Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mArtist Load (0.4ms)[0m  SELECT  "artists".* FROM "artists"  ORDER BY "artists"."id" ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "artists" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"  [["name", "a"], ["created_at", "2016-10-19 17:23:42.267247"], ["updated_at", "2016-10-19 17:23:42.267247"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mArtist Exists (0.2ms)[0m  SELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'a' LIMIT 1
+  [1m[36mArtist Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "artists" WHERE "artists"."name" = 'A' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
